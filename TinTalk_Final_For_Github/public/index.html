@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TinTalk | Chat • Connect • Share</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <link rel="stylesheet" href="/css/style.css?v=6">
+</head>
+<body>
+
+    <!-- Authentication Screen -->
+    <div id="auth-screen">
+        <img src="/images/logo.svg" class="logo app-logo-img" alt="TinTalk">
+        <button class="theme-toggle auth-theme-toggle" id="auth-theme-toggle" type="button" aria-label="Switch theme">
+            <ion-icon name="sunny-outline"></ion-icon>
+            <span class="text">Light mode</span>
+        </button>
+        
+        <form id="auth-form">
+            <input type="text" id="username" class="input-field" placeholder="Username" required autocomplete="username">
+            <input type="password" id="password" class="input-field" placeholder="Password" required autocomplete="current-password">
+            <button type="submit" class="btn" id="auth-btn">Log In</button>
+        </form>
+        
+        <div class="toggle-auth">
+            <span id="toggle-mode">Don't have an account? Sign up</span>
+        </div>
+        
+        <div class="toggle-auth" style="margin-top: 15px;">
+            <span id="open-admin-btn">🔑 Admin Panel</span>
+        </div>
+        
+        <p id="auth-error" style="color: #ed4956; font-size: 0.85rem; margin-top: 10px; display: none;"></p>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div id="admin-dashboard" class="hidden">
+        <div class="admin-header">
+            <div><h1 class="logo">Admin</h1></div>
+            <button class="btn btn-small" id="admin-logout">Exit</button>
+        </div>
+        <div id="admin-login-area">
+            <input type="password" id="admin-password" class="input-field" placeholder="Admin password">
+            <button id="admin-login-btn" class="btn">Access Dashboard</button>
+            <p id="admin-error" style="color: #ed4956; font-size: 0.85rem; margin-top: 10px; display: none;"></p>
+        </div>
+        <div id="admin-panel" class="hidden">
+            <table class="admin-table">
+                <thead><tr><th>User</th><th>Status</th><th>Verified</th><th>Actions</th></tr></thead>
+                <tbody id="admin-user-list"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Main Application UI -->
+    <div id="app-container" class="hidden">
+        
+        <!-- Navigation Sidebar -->
+        <nav class="side-nav">
+            <div class="nav-brand">
+                <img src="/images/logo.svg" class="logo desktop-only app-logo-img" alt="TinTalk">
+            </div>
+            
+            <div class="nav-links">
+                <div class="nav-item active" data-tab="tab-feed">
+                    <ion-icon name="home-outline"></ion-icon>
+                    <span class="desktop-only text">Home</span>
+                </div>
+                <div class="nav-item" data-tab="tab-discover">
+                    <ion-icon name="compass-outline"></ion-icon>
+                    <span class="desktop-only text">Explore</span>
+                </div>
+                <div class="nav-item" data-tab="tab-chats" style="position: relative;">
+                    <ion-icon name="chatbubble-ellipses-outline"></ion-icon>
+                    <span class="desktop-only text">Messages</span>
+                    <!-- Unread App Dot -->
+                    <div class="app-unread-badge hidden" id="nav-chat-badge"></div>
+                </div>
+                <div class="nav-item" data-tab="tab-profile" style="position: relative;">
+                    <ion-icon name="person-circle-outline"></ion-icon>
+                    <span class="desktop-only text">Profile</span>
+                    <div class="app-unread-badge hidden" id="nav-profile-badge"></div>
+                </div>
+            </div>
+            
+            <div class="nav-bottom desktop-only">
+                <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch theme">
+                    <ion-icon name="sunny-outline"></ion-icon>
+                    <span class="text">Light mode</span>
+                </button>
+                <div class="nav-item" id="logout-btn">
+                    <ion-icon name="log-out-outline"></ion-icon>
+                    <span class="text">Log out</span>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Content Area -->
+        <main class="content-area">
+            
+            <!-- ====== FEED TAB ====== -->
+            <section id="tab-feed" class="tab-content active view-feed slide-up-anim">
+                <div class="feed-container">
+                    <div class="create-post-box">
+                        <textarea id="post-caption" placeholder="Share a photo or video..."></textarea>
+                        <div class="post-actions">
+                            <label class="upload-btn">
+                                <ion-icon name="image-outline"></ion-icon>
+                                <span class="desktop-only" style="font-size:0.9rem">Media</span>
+                                <input type="file" id="post-media" accept="image/*,video/*" hidden>
+                            </label>
+                            <span id="post-file-name" style="font-size: 0.8rem; color: #a8a8a8; margin-left:10px;"></span>
+                            <button id="submit-post-btn" class="btn btn-small">Post</button>
+                        </div>
+                    </div>
+                    <div id="feed-timeline"></div>
+                </div>
+            </section>
+
+            <!-- ====== CHATS TAB ====== -->
+            <section id="tab-chats" class="tab-content view-chats">
+                <!-- Inner Sidebar -->
+                <div class="active-chats-sidebar">
+                    <div class="tab-header">
+                        <h2>Messages</h2>
+                    </div>
+                    <div id="active-chats-list" class="user-list"></div>
+                </div>
+                
+                <!-- Chat Window -->
+                <div class="chat-window">
+                    <div class="chat-header" id="current-chat-header">
+                        <h3>Your Messages</h3>
+                    </div>
+                    <div class="messages" id="messages-container">
+                        <div class="empty-state">Send private photos and messages to a friend or group.</div>
+                    </div>
+                    <div class="typing-indicator" id="typing-indicator"></div>
+                    <div class="input-area hidden" id="chat-composer" style="position: relative;">
+                        <!-- Emoji Picker -->
+                        <div class="emoji-picker hidden" id="emoji-picker">
+                            <div class="emoji-grid" id="emoji-grid">
+                                <span>😀</span><span>😂</span><span>😍</span><span>🥰</span><span>😎</span><span>🥺</span><span>😭</span><span>😅</span>
+                                <span>❤️</span><span>🔥</span><span>👍</span><span>🙏</span><span>✨</span><span>🎉</span><span>💯</span><span>👏</span>
+                                <span>🤔</span><span>🙄</span><span>😡</span><span>💀</span><span>🤡</span><span>👻</span><span>👽</span><span>🤖</span>
+                                <span>🐶</span><span>🐱</span><span>🍕</span><span>🍔</span><span>☕</span><span>🍻</span><span>🎂</span><span>🎁</span>
+                            </div>
+                        </div>
+                        
+                        <div class="composer-wrap">
+                            <button id="emoji-toggle-btn" class="icon-action-btn"><ion-icon name="happy-outline"></ion-icon></button>
+                            <input type="text" id="message-input" placeholder="Message...">
+                            <button class="send-btn-ig" id="send-btn">Send</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ====== DISCOVER TAB ====== -->
+            <section id="tab-discover" class="tab-content view-discover slide-up-anim">
+                <div class="tab-header" style="border-bottom:none; padding-bottom:0;">
+                    <div class="explore-toggles">
+                        <button class="toggle-btn active" id="btn-search-mode">Search People</button>
+                        <button class="toggle-btn" id="btn-group-mode">Create Group</button>
+                    </div>
+                    
+                    <!-- Search Mode Tools -->
+                    <div id="search-tools" style="margin-top: 15px;">
+                        <input type="text" class="input-field" id="discover-search-input" placeholder="Search for users...">
+                    </div>
+                    
+                    <!-- Group Mode Tools -->
+                    <div id="group-tools" class="hidden" style="margin-top: 15px;">
+                        <input type="text" class="input-field" id="group-name-input" placeholder="Enter Group Name">
+                        <button class="btn btn-small" style="width:100%; margin-top:5px;" id="submit-group-btn">Send Group Invites</button>
+                    </div>
+                </div>
+                
+                <div class="discover-grid" id="discover-list"></div>
+            </section>
+
+            <!-- ====== PROFILE TAB ====== -->
+            <section id="tab-profile" class="tab-content view-profile slide-up-anim">
+                <div class="tab-header mobile-only" style="justify-content: space-between; display: flex;">
+                    <h2>Profile</h2>
+                    <ion-icon name="log-out-outline" id="mobile-logout-btn" style="font-size: 1.5rem;"></ion-icon>
+                </div>
+
+                <div class="profile-container" style="width:100%; height:100%; overflow-y:auto; padding-bottom: 50px;">
+                    <!-- Notifications Area -->
+                    <div class="notifications-panel" id="notifications-panel" style="display:none;">
+                        <h3 style="margin-bottom: 10px; font-size: 1rem;">Notifications</h3>
+                        <div id="notifications-list"></div>
+                    </div>
+
+                    <!-- Profile Editor -->
+                    <div class="profile-editor">
+                        <div class="profile-hero-card">
+                            <div class="profile-cover-strip"></div>
+                            <div class="profile-avatar-wrapper">
+                                <img id="profile-preview" class="avatar-large" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%23262626'/><path fill='white' d='M50 55A20 20 0 1 0 30 35 20 20 0 0 0 50 55zm0-35a15 15 0 1 1-15 15A15 15 0 0 1 50 20zm0 40c-15 0-45 7.5-45 22.5V90h90v-7.5C95 67.5 65 60 50 60z'/></svg>" alt="Profile Picture">
+                                <label class="avatar-upload-overlay">
+                                    <ion-icon name="camera"></ion-icon>
+                                    <input type="file" id="profile-avatar-input" accept="image/*" hidden>
+                                </label>
+                            </div>
+                            <div class="profile-hero-copy">
+                                <p class="profile-kicker">TinTalk profile</p>
+                                <h2 id="profile-display-name">Your profile</h2>
+                                <p id="profile-display-bio">Add a bio and make it yours.</p>
+                            </div>
+                            <div class="profile-chip-row">
+                                <span class="profile-chip"><ion-icon name="sparkles-outline"></ion-icon> Public</span>
+                                <span class="profile-chip"><ion-icon name="chatbubble-ellipses-outline"></ion-icon> Chat ready</span>
+                            </div>
+                        </div>
+                        
+                        <div class="profile-form">
+                            <div class="profile-form-heading">
+                                <h3>Edit Profile</h3>
+                                <p>Keep your name and bio fresh.</p>
+                            </div>
+                            <label>Name</label>
+                            <input type="text" id="profile-name-input" class="input-field">
+                            
+                            <label>Bio</label>
+                            <input type="text" id="profile-bio-input" class="input-field" placeholder="Bio">
+                            
+                            <button id="save-profile-btn" class="btn" style="margin-top:20px;">Save Profile</button>
+                            <p id="profile-status" style="color: #0095f6; margin-top: 10px; font-size:0.9rem; text-align:center;"></p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script src="/js/main.js?v=6"></script>
+    <script> document.getElementById('mobile-logout-btn').addEventListener('click', () => document.getElementById('logout-btn').click()); </script>
+</body>
+</html>

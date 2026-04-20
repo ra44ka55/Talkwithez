@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TinTalk Admin</title>
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+    <main class="admin-shell">
+        <section id="login-card" class="login-card">
+            <img src="/images/logo.svg" class="admin-logo" alt="TinTalk">
+            <h1>Admin Panel</h1>
+            <p>Enter admin password to manage users, groups, and posts.</p>
+            <input id="admin-password" type="password" placeholder="Admin password" autocomplete="current-password">
+            <button id="admin-login">Open Dashboard</button>
+            <p id="login-error" class="error-text"></p>
+        </section>
+
+        <section id="dashboard" class="dashboard hidden">
+            <header class="topbar">
+                <div>
+                    <p class="eyebrow">TinTalk Control</p>
+                    <h1>Dashboard</h1>
+                </div>
+                <div class="top-actions">
+                    <a href="/" class="ghost-link">Open App</a>
+                    <button id="refresh-dashboard" class="ghost-button">Refresh</button>
+                    <button id="logout-admin" class="danger-button">Logout</button>
+                </div>
+            </header>
+
+            <section class="stats-grid">
+                <article class="stat-card">
+                    <span>Total Users</span>
+                    <strong id="stat-users">0</strong>
+                </article>
+                <article class="stat-card">
+                    <span>Blue Ticks</span>
+                    <strong id="stat-verified">0</strong>
+                </article>
+                <article class="stat-card">
+                    <span>Total Groups</span>
+                    <strong id="stat-groups">0</strong>
+                </article>
+                <article class="stat-card">
+                    <span>Total Posts</span>
+                    <strong id="stat-posts">0</strong>
+                </article>
+            </section>
+
+            <section class="panel">
+                <div class="panel-heading">
+                    <h2>Users</h2>
+                    <p>Username, password, activity, and blue tick controls.</p>
+                </div>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Password</th>
+                                <th>Status</th>
+                                <th>Blue Tick</th>
+                                <th>Last Active</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="users-table"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="panel">
+                <div class="panel-heading">
+                    <h2>Groups</h2>
+                    <p>All created groups with member count.</p>
+                </div>
+                <div id="groups-list" class="list-grid"></div>
+            </section>
+
+            <section class="panel">
+                <div class="panel-heading">
+                    <h2>Posts</h2>
+                    <p>Delete any post from the feed.</p>
+                </div>
+                <div id="posts-list" class="posts-list"></div>
+            </section>
+        </section>
+    </main>
+
+    <script src="/js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<svg width="720" height="720" viewBox="0 0 720 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bubbleBlue" x1="148" y1="185" x2="360" y2="420" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#68D9FF"/>
+      <stop offset="0.45" stop-color="#1C9BFF"/>
+      <stop offset="1" stop-color="#2444D8"/>
+    </linearGradient>
+    <linearGradient id="bubblePink" x1="372" y1="192" x2="593" y2="414" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FF87C3"/>
+      <stop offset="0.48" stop-color="#FF258E"/>
+      <stop offset="1" stop-color="#C11283"/>
+    </linearGradient>
+    <linearGradient id="wifiOuter" x1="362" y1="83" x2="362" y2="183" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFD661"/>
+      <stop offset="0.55" stop-color="#FF9500"/>
+      <stop offset="1" stop-color="#FF406B"/>
+    </linearGradient>
+    <linearGradient id="wifiInner" x1="362" y1="134" x2="362" y2="225" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFAB19"/>
+      <stop offset="1" stop-color="#FF2484"/>
+    </linearGradient>
+    <linearGradient id="wordmark" x1="173" y1="520" x2="552" y2="631" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#5AD5FF"/>
+      <stop offset="0.3" stop-color="#1C98FF"/>
+      <stop offset="0.68" stop-color="#6B36DA"/>
+      <stop offset="1" stop-color="#FF2E9A"/>
+    </linearGradient>
+  </defs>
+  <path d="M170 250C170 207.922 204.922 173 247 173H325C376.362 173 418 214.638 418 266C418 317.362 376.362 359 325 359H287L239 395V359H247C204.922 359 170 324.078 170 282V250Z" fill="url(#bubbleBlue)"/>
+  <path d="M302 212C274.386 212 252 233.938 252 261C252 288.062 274.386 310 302 310C320.694 310 336.992 300.013 345.595 285.202C347.746 281.5 343.43 277.74 340.109 280.61C330.645 288.795 317.489 293.8 303.2 293.8C287.365 293.8 272.92 287.646 262.308 277.567C259.408 274.813 254.708 278.137 256.575 281.641C264.842 297.158 282.272 308 302 308C329.614 308 352 286.062 352 259C352 231.938 329.614 212 302 212Z" fill="#F8FBFF"/>
+  <circle cx="247" cy="255" r="16" fill="#F8FBFF"/>
+  <circle cx="331" cy="248" r="16" fill="#F8FBFF"/>
+  <path d="M357 258C357 215.922 391.922 181 434 181H508C562.124 181 606 224.876 606 279C606 333.124 562.124 377 508 377H489V411L446 377H434C391.922 377 357 342.078 357 300V258Z" fill="url(#bubblePink)"/>
+  <circle cx="444" cy="268" r="15" fill="#FFF6FA"/>
+  <circle cx="492" cy="268" r="15" fill="#FFF6FA"/>
+  <circle cx="540" cy="268" r="15" fill="#FFF6FA"/>
+  <path d="M224 126C265.18 85.2241 311.473 66 360 66C408.527 66 454.82 85.2241 496 126" stroke="url(#wifiOuter)" stroke-width="26" stroke-linecap="round"/>
+  <path d="M266 166C293.712 138.451 326.086 124 360 124C393.914 124 426.288 138.451 454 166" stroke="url(#wifiInner)" stroke-width="22" stroke-linecap="round"/>
+  <path d="M322 212C333.022 201.07 346.153 195 360 195C373.847 195 386.978 201.07 398 212" stroke="url(#wifiInner)" stroke-width="18" stroke-linecap="round"/>
+  <text x="360" y="560" text-anchor="middle" fill="url(#wordmark)" font-size="108" font-weight="800" font-family="Trebuchet MS, Segoe UI, Arial, sans-serif">TinTalk</text>
+  <text x="360" y="615" text-anchor="middle" fill="#4B5A78" font-size="29" font-weight="700" font-family="Segoe UI, Arial, sans-serif">Chat • Connect • Share</text>
+</svg>
